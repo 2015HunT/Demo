@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
+    <title>GitHub PagesでGoogle Sheetsにデータ保存</title>
 </head>
 <body>
-    <h1>こんにちは！</h1>
-    <p>これはGitHub Pagesでホストされたウェブサイトです。</p>
+    <h1>データをGoogle Sheetsへ保存</h1>
+    <input type="text" id="inputText" placeholder="データを入力">
+    <button onclick="sendData()">保存</button>
+    <p id="message"></p>
+
+    <script>
+        function sendData() {
+            const text = document.getElementById("inputText").value;
+            fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+                method: "POST",
+                body: JSON.stringify({ data: text }),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("message").textContent = "データを保存しました！";
+            })
+            .catch(error => console.error("エラー:", error));
+        }
+    </script>
 </body>
 </html>
